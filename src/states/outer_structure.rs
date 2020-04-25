@@ -22,9 +22,11 @@ impl States {
     }
 
     fn tran_start<T: Writer>(s: String, o: &mut T) -> Result<States, String> {
+        o.print_begin();
         if s == "---" {
             Ok(Self::META(Meta::new()))
         } else {
+            o.print_begin_document();
             Document::new(s).map(|d| Self::DOCUMENT(d))
         }
     }
@@ -32,6 +34,7 @@ impl States {
     fn tran_meta<T: Writer>(meta: Meta, s: String, o: &mut T) -> Result<States, String> {
         if s == "---" {
             o.print_meta(meta);
+            o.print_begin_document();
             Document::new("".to_string()).map(|d| Self::DOCUMENT(d))
         } else {
             match meta.tran(s) {

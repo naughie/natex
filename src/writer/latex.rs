@@ -8,18 +8,30 @@ pub struct LaTeX<W: Write> {
 }
 
 impl<W: Write> Writer for LaTeX<W> {
+    fn print_begin(&mut self) {
+        write!(self.b, "\\documentclass[a4paper]{{article}}\n").unwrap();
+    }
+
+    fn print_end(&mut self) {}
+
     fn print_meta(&mut self, meta: Meta) {
         write!(
             self.b,
-            "\\documentclass[a4paper]{{article}}\n\
-             \\title{{{}}}\n\
+            "\\title{{{}}}\n\
              \\author{{{}}}\n\
              \\affil{{{}}}\n\
-             \\date{{{}}}\n\
-             \\begin{{document}}\n",
+             \\date{{{}}}\n",
             meta.title, meta.author, meta.affil, meta.date
         )
         .unwrap();
+    }
+
+    fn print_begin_document(&mut self) {
+        write!(self.b, "\\begin{{document}}\n").unwrap();
+    }
+
+    fn print_end_document(&mut self) {
+        write!(self.b, "\\end{{document}}\n").unwrap();
     }
 }
 

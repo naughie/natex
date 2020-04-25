@@ -28,6 +28,8 @@ impl<T: Writer> Reader<T> {
                 Err(e) => return Err(std::io::Error::new(std::io::ErrorKind::Other, e)),
             }
         }
+        self.o.print_end_document();
+        self.o.print_end();
         Ok(())
     }
 }
