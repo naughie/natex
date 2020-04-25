@@ -1,8 +1,8 @@
 use std::fs::File;
 
-pub mod reader;
-pub mod states;
-pub mod writer;
+mod reader;
+mod states;
+mod writer;
 
 use self::reader::Reader;
 use self::writer::latex::LaTeX;
